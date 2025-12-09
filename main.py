@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import gradio as gr
 
 from langchain_core.output_parsers import StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -40,22 +41,44 @@ print("Albert: Hi, I am Albert, how can I help you today?")
 
 history = []
 
-while True:
-    user_input = input("You: ")
-    if user_input == "exit":
-        break
+# while True:
+#     user_input = input("You: ")
+#     if user_input == "exit":
+#         break
+#
+#     #history.append({"role":"user", "content":user_input}) -> stores the input
+#
+#     #response = llm.invoke([{"role":"system", "content":system_prompt}] + history)
+#                            #{"role":"user", "content":user_input}]) -> transferred to list so llm stays within its specified prompt.
+#     response = chain.invoke({"input": user_input, "history": history})
+#
+#     print(f"Albert: {response.content}") #using content, only AI MESSAGE is printed out, not the other info.
+#
+#     #history.append({"role": "system", "content": response.content}) -> stores the response
+#
+#     history.append(HumanMessage(content=user_input))
+#     history.append(AIMessage(content=response.content))
+#
+#     print(f"History: {history}")
 
-    #history.append({"role":"user", "content":user_input}) -> stores the input
+page = gr.Blocks(
+    title="Chat with Einstein",
+    #theme=gr.themes.Soft() -> should be in launch in new version
+)
 
-    #response = llm.invoke([{"role":"system", "content":system_prompt}] + history)
-                           #{"role":"user", "content":user_input}]) -> transferred to list so llm stays within its specified prompt.
-    response = chain.invoke({"input": user_input, "history": history})
+with page:
+    gr.Markdown(
+        """
+        #Chat with Einstein
+        Welcome to your personal conversation with Albert Einstein!
+        """
+    )
 
-    print(f"Albert: {response.content}") #using content, only AI MESSAGE is printed out, not the other info.
+    chatbot = gr.Chatbot()
 
-    #history.append({"role": "system", "content": response.content}) -> stores the response
+    msg = gr.Textbox()
 
-    history.append(HumanMessage(content=user_input))
-    history.append(AIMessage(content=response.content))
+    clear = gr.Button("Clear Chat") #default name="Run"
 
-    print(f"History: {history}")
+page.launch(theme=gr.themes.Soft(),
+            share=True) #share allows us to create a public link.
