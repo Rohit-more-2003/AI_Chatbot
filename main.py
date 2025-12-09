@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import os
 import gradio as gr
 
-#from langchain_core.output_parsers import StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
@@ -58,7 +57,6 @@ def chat(user_in, hist):
 
 page = gr.Blocks(
     title="Chat with Einstein",
-    #theme=gr.themes.Soft() -> should be in launch in new version
 )
 
 with page:
@@ -69,7 +67,8 @@ with page:
         """
     )
 
-	chatbot = gr.Chatbot()
+	chatbot = gr.Chatbot(avatar_images=(None, "/home/rohit-m/PycharmProjects/AI_Chatbot/einstein.png"),
+	                     show_label=False)  #show_label used to show/ not show the label
 
 	msg = gr.Textbox()
 	msg.submit(chat, [msg, chatbot], [msg, chatbot])
