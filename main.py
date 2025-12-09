@@ -54,6 +54,9 @@ def chat(user_in, hist):
 	                   {"role": "assistant", "content": response.content}]
 
 
+def clear_chat():
+	return "", []
+
 
 page = gr.Blocks(
     title="Chat with Einstein",
@@ -70,10 +73,11 @@ with page:
 	chatbot = gr.Chatbot(avatar_images=(None, "/home/rohit-m/PycharmProjects/AI_Chatbot/einstein.png"),
 	                     show_label=False)  #show_label used to show/ not show the label
 
-	msg = gr.Textbox()
-	msg.submit(chat, [msg, chatbot], [msg, chatbot])
+	msg = gr.Textbox(show_label=False, placeholder="Ask Einstein everything...")
+	msg.submit(chat, inputs=[msg, chatbot], outputs=[msg, chatbot])
 
 	clear = gr.Button("Clear Chat") #default name="Run"
+	clear.click(clear_chat, outputs=[msg, chatbot])
 
 page.launch(theme=gr.themes.Soft(),
             share=True) #share allows us to create a public link.
