@@ -1,8 +1,6 @@
 # 🧠 Chat with Einstein  
 A conversational AI app that lets you chat with **Albert Einstein** — powered by **Gemini 2.5 Flash Lite**, **LangChain**, and **Gradio**.
 
-![Einstein Banner](https://via.placeholder.com/1200x300.png?text=Chat+with+Einstein)
-
 ---
 
 ## 📚 Overview
@@ -16,17 +14,10 @@ This project creates an interactive chatbot where Einstein responds with:
 
 Built with:
 
-- **Python 3.10+**
+- **Python 3.12**
 - **Google Gemini API**
 - **LangChain**
 - **Gradio**
-
----
-
-## 📸 Screenshot
-
-### Chat Interface
-![Chat UI](https://via.placeholder.com/900x500.png?text=Einstein+Chat+UI)
 
 ---
 
