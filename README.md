@@ -60,16 +60,16 @@ AI_Chatbot/
 ---
 
 ## ⚙️ Installation & Setup
-
-git clone https://github.com/Rohit-more-2003/AI_Chatbot.git<br>
+```text
+git clone https://github.com/Rohit-more-2003/AI_Chatbot.git
 cd AI_Chatbot
 
-python -m venv venv <br>
+python -m venv venv 
 source venv/bin/activate      # Linux / macOS<br>
 venv\Scripts\activate         # Windows<br>
 
 pip install -r requirements.txt
-
+```
 ---
 
 ## 🔑 Environment Variables
