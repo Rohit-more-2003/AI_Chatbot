@@ -1,0 +1,9 @@
+.venv/
+.idea/
+.env
+.gradio/
+.git
+.gitignore
+__pycache__/
+*.py[cod]
+README.md
