@@ -70,7 +70,7 @@ with page:
         """
     )
 
-	chatbot = gr.Chatbot(avatar_images=(None, "/home/rohit-m/PycharmProjects/AI_Chatbot/einstein.png"),
+	chatbot = gr.Chatbot(avatar_images=(None, "einstein.png"),
 	                     show_label=False)  #show_label used to show/ not show the label
 
 	msg = gr.Textbox(show_label=False, placeholder="Ask Einstein everything...")
