@@ -28,6 +28,10 @@ llm = ChatGoogleGenerativeAI(
     temperature=0.3
 )
 
+# response = llm.invoke("Hey, are we good?")
+
+# print(response)
+
 prompt = ChatPromptTemplate([
     ("system", system_prompt),
     (MessagesPlaceholder(variable_name="history")),
@@ -48,7 +52,10 @@ def chat(user_in, hist):
 		elif item["role"] == "assistant":
 			langchain_history.append(AIMessage(content=item["content"]))
 		
-	response = chain.invoke({"input": user_in, "history": langchain_history})
+	response = chain.invoke({
+		"input": user_in, 
+		"history": langchain_history
+    })
 		
 	return "", hist + [{"role": "user", "content": user_in},
 	                   {"role": "assistant", "content": response.content}]
@@ -63,21 +70,39 @@ page = gr.Blocks(
 )
 
 with page:
-	gr.Markdown(
+    gr.Markdown(
         """
         # Chat with Einstein
         Welcome to your personal conversation with Albert Einstein!
         """
     )
 
-	chatbot = gr.Chatbot(avatar_images=(None, "einstein.png"),
-	                     show_label=False)  #show_label used to show/ not show the label
+    avatar_path = os.path.join(os.path.dirname(__file__), "einstein.png")
 
-	msg = gr.Textbox(show_label=False, placeholder="Ask Einstein everything...")
-	msg.submit(chat, inputs=[msg, chatbot], outputs=[msg, chatbot])
+    chatbot = gr.Chatbot(
+        avatar_images=(None, avatar_path),
+        show_label=False
+    )  #show_label used to show/ not show the label
 
-	clear = gr.Button("Clear Chat") #default name="Run"
-	clear.click(clear_chat, outputs=[msg, chatbot])
+    msg = gr.Textbox(
+        show_label=False, 
+        placeholder="Ask Einstein everything..."
+    )
+    msg.submit(
+        chat, 
+        inputs=[msg, chatbot], 
+        outputs=[msg, chatbot]
+    )
 
-page.launch(theme=gr.themes.Soft(),
-            share=True) #share allows us to create a public link.
+    clear = gr.Button("Clear Chat") #default name="Run"
+    clear.click(
+        clear_chat, 
+        outputs=[msg, chatbot]
+    )
+
+page.launch(
+	server_name="0.0.0.0",
+	server_port=7860,
+	theme=gr.themes.Soft(),
+	share=True # Changed to false as docker already creates a public link
+) #share allows us to create a public link.
